@@ -46,7 +46,7 @@ if [ $(dpkg-query -W -f='${Status}' expect 2>/dev/null | grep -c "ok installed")
     sudo apt-get -y install expect
 
 fi
-$NEW_CUSTOM_MYSQL_PASSWORD ='_'
+NEW_CUSTOM_MYSQL_PASSWORD='_'
 SECURE_MYSQL=$(expect -c "
 
 set timeout 3
@@ -83,6 +83,10 @@ expect eof
 # Execution mysql_secure_installation
 #
 echo "${SECURE_MYSQL}"
+
+echo " ##################### "
+echo "${NEW_CUSTOM_MYSQL_PASSWORD}"
+echo " ##################### "
 
 if [ "${PURGE_EXPECT_WHEN_DONE}" -eq 1 ]; then
     # Uninstalling expect package
