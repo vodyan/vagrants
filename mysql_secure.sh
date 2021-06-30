@@ -25,7 +25,7 @@ fi
 #
 if [ -n "${1}" -a -z "${2}" ]; then
     # Setup root password
-    CURRENT_MYSQL_PASSWORD=''
+    CURRENT_MYSQL_PASSWORD='_'
     NEW_MYSQL_PASSWORD="${1}"
 elif [ -n "${1}" -a -n "${2}" ]; then
     # Change existens root password
