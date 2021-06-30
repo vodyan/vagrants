@@ -10,7 +10,7 @@
 # Delete package expect when script is done
 # 0 - No;
 # 1 - Yes.
-PURGE_EXPECT_WHEN_DONE=0
+PURGE_EXPECT_WHEN_DONE=1
 
 #
 # Check the bash shell script is being run by root
@@ -46,29 +46,29 @@ if [ $(dpkg-query -W -f='${Status}' expect 2>/dev/null | grep -c "ok installed")
     sudo apt-get -y install expect
 
 fi
-
+$NEW_CUSTOM_MYSQL_PASSWORD ='_'
 SECURE_MYSQL=$(expect -c "
 
 set timeout 3
 spawn mysql_secure_installation
 
 expect \"Enter current password for root (enter for none):\"
-send \"$CURRENT_MYSQL_PASSWORD\r\"
+send \"$NEW_CUSTOM_MYSQL_PASSWORD\r\"
 
 expect \"root password?\"
 send \"y\r\"
 
 expect \"New password:\"
-send \"$NEW_MYSQL_PASSWORD\r\"
+send \"$NEW_CUSTOM_MYSQL_PASSWORD\r\"
 
 expect \"Re-enter new password:\"
-send \"$NEW_MYSQL_PASSWORD\r\"
+send \"$NEW_CUSTOM_MYSQL_PASSWORD\r\"
 
 expect \"Remove anonymous users?\"
 send \"y\r\"
 
 expect \"Disallow root login remotely?\"
-send \"y\r\"
+send \"n\r\"
 
 expect \"Remove test database and access to it?\"
 send \"y\r\"
