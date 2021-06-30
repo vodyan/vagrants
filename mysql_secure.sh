@@ -25,7 +25,7 @@ fi
 #
 if [ -n "${1}" -a -z "${2}" ]; then
     # Setup root password
-    CURRENT_MYSQL_PASSWORD='_'
+    CURRENT_MYSQL_PASSWORD=""
     NEW_MYSQL_PASSWORD="${1}"
 elif [ -n "${1}" -a -n "${2}" ]; then
     # Change existens root password
@@ -46,23 +46,23 @@ if [ $(dpkg-query -W -f='${Status}' expect 2>/dev/null | grep -c "ok installed")
     sudo apt-get -y install expect
 
 fi
-NEW_CUSTOM_MYSQL_PASSWORD='_'
+
 SECURE_MYSQL=$(expect -c "
 
 set timeout 3
 spawn mysql_secure_installation
 
 expect \"Enter current password for root (enter for none):\"
-send \"$NEW_CUSTOM_MYSQL_PASSWORD\r\"
+send \"\r\"
 
 expect \"root password?\"
 send \"y\r\"
 
 expect \"New password:\"
-send \"$NEW_CUSTOM_MYSQL_PASSWORD\r\"
+send \"\r\"
 
 expect \"Re-enter new password:\"
-send \"$NEW_CUSTOM_MYSQL_PASSWORD\r\"
+send \"\r\"
 
 expect \"Remove anonymous users?\"
 send \"y\r\"
@@ -83,10 +83,6 @@ expect eof
 # Execution mysql_secure_installation
 #
 echo "${SECURE_MYSQL}"
-
-echo " ##################### "
-echo "${NEW_CUSTOM_MYSQL_PASSWORD}"
-echo " ##################### "
 
 if [ "${PURGE_EXPECT_WHEN_DONE}" -eq 1 ]; then
     # Uninstalling expect package
